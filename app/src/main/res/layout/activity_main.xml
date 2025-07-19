@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity"
+        android:fitsSystemWindows="true"
+        android:id="@+id/main"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/imageSlider"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                />
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                >
+                <TextView
+                    android:id="@+id/mostPopular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Most Popular"
+                    android:textSize="32sp"
+                    android:layout_marginVertical="15dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="80dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/popularRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    tools:layout_editor_absoluteY="135dp" />
+                <TextView
+                    android:id="@+id/upcomingMovies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upcoming Movies"
+                    android:textSize="32sp"
+                    android:layout_marginVertical="15dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="80dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/upcomingMoviesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    tools:layout_editor_absoluteY="135dp" />
+                <TextView
+                    android:id="@+id/topRated"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Top Rated"
+                    android:textSize="32sp"
+                    android:layout_marginVertical="15dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="80dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/topRatedRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    tools:layout_editor_absoluteY="135dp" />
+                <TextView
+                    android:id="@+id/nowPlaying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Now Playing"
+                    android:textSize="32sp"
+                    android:layout_marginVertical="15dp"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="80dp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/nowPlayingRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
+                    tools:layout_editor_absoluteY="135dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
