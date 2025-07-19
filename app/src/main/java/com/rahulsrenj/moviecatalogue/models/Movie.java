@@ -177,7 +177,9 @@ public class Movie extends BaseObservable {
     public static void loadPosterImage(ImageView view,String url){
         String baseImageURL="https://image.tmdb.org/t/p/w500/";
         String posterPath=baseImageURL+url;
-        Glide.with(view.getContext()).load(posterPath).into(view);
+        Glide.with(view.getContext()).load(posterPath)
+                .placeholder(R.drawable.placeholder_image)
+                .into(view);
 
     }
 }
