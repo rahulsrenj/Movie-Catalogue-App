@@ -152,27 +152,29 @@ public class MainActivity extends AppCompatActivity {
                 nowPlayingAdapter.updateData((ArrayList<Movie>) movies);
                 imageSliderAdapter.updateData((ArrayList<Movie>) movies);
 
-
-                runnable=new Runnable() {
-                    @Override
-                    public void run() {
-                        if (imageSliderAdapter.getItemCount()>0)
-                        {
-                            int nextItem= imageSlider.getCurrentItem()+1;
-                            if (nextItem>=imageSliderAdapter.getItemCount())
-                            {
-                                nextItem=0;
-                            }
-                            imageSlider.setCurrentItem(nextItem);
-                            //we need to call this to start scrolling in a loop
-                            handler.postDelayed(this,5000);
-
-                        }
-                    }
-                };
-                handler.postDelayed(runnable,5000);
             }
         });
+        if (runnable==null)
+        {
+            runnable=new Runnable() {
+                @Override
+                public void run() {
+                    if (imageSliderAdapter.getItemCount()>0)
+                    {
+                        int nextItem= imageSlider.getCurrentItem()+1;
+                        if (nextItem>=imageSliderAdapter.getItemCount())
+                        {
+                            nextItem=0;
+                        }
+                        imageSlider.setCurrentItem(nextItem,true);
+                        //we need to call this to start scrolling in a loop
+                        handler.postDelayed(this,5000);
+
+                    }
+                }
+            };
+            handler.postDelayed(runnable,5000);
+        }
 
     }
     public void getTopRatedMovies(){
