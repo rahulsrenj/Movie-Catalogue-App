@@ -87,5 +87,5 @@ This app uses modern Android development practices and libraries:
 ### Installation
 
 ```bash
-git clone https://github.com/yourusername/MovieCatalogue.git
+git clone https://github.com/rahulsrenj/MovieCatalogue.git
 cd MovieCatalogue
