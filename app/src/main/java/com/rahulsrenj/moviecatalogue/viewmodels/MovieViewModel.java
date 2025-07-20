@@ -30,6 +30,10 @@ public class MovieViewModel extends AndroidViewModel {
         return repository.getNowPlayingMoviesLiveData();
     }
 
+    public LiveData<Boolean> getErrorState(){
+        return repository.getErrorState();
+    }
+
 
 
 }

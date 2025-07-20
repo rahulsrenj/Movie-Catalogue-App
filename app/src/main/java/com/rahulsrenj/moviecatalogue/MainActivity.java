@@ -1,3 +1,9 @@
+/*
+
+    Author: Rahul S Renjith
+
+ */
+
 package com.rahulsrenj.moviecatalogue;
 
 import android.os.Bundle;
@@ -7,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -18,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.rahulsrenj.moviecatalogue.databinding.ActivityMainBinding;
 import com.rahulsrenj.moviecatalogue.models.Movie;
 import com.rahulsrenj.moviecatalogue.view.ImageSliderAdapter;
@@ -29,6 +37,10 @@ import com.rahulsrenj.moviecatalogue.viewmodels.MovieViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/*
+    Add the TMDB API key in the strings.xml
+ */
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     private MovieListAdapter popularAdapter,upcomingAdapter,topRatedAdapter,nowPlayingAdapter;
@@ -48,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
-
         viewModel= new ViewModelProvider(this).get(MovieViewModel.class);
         popularMovieRecyclerView=binding.popularRecyclerView;
         upcomingMoviesRecyclerView=binding.upcomingMoviesRecyclerView;
@@ -56,7 +67,32 @@ public class MainActivity extends AppCompatActivity {
         topRatedRecyclerView=binding.topRatedRecyclerView;
         imageSlider=binding.imageSlider;
 
+        viewModel.getErrorState().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean)
+                {
+                    binding.main.setVisibility(View.GONE);
+                    binding.errorState.setVisibility(View.VISIBLE);
+                    Snackbar.make(binding.getRoot(),"Failed to load",Snackbar.LENGTH_INDEFINITE).setAction("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            loadMovieData();
+                        }
+                    }).show();
+                }
+                else{
+                    binding.main.setVisibility(View.VISIBLE);
+                    binding.errorState.setVisibility(View.GONE);
+                }
+            }
+        });
 
+        loadMovieData();
+
+
+    }
+    public void getPopularMovies(){
         popularAdapter=new MovieListAdapter(new ArrayList<>());
         popularMovieRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
         popularMovieRecyclerView.setAdapter(popularAdapter);
@@ -67,6 +103,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        viewModel.getPopularMovieLiveData().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
+                popularAdapter.updateData((ArrayList<Movie>) movies);
+            }
+        });
+
+
+    }
+
+    public void getUpcomingMovies(){
         upcomingAdapter=new MovieListAdapter(new ArrayList<>());
         upcomingMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
         upcomingMoviesRecyclerView.setAdapter(upcomingAdapter);
@@ -76,7 +123,16 @@ public class MainActivity extends AppCompatActivity {
                 showMovieDetails(movie);
             }
         });
+        viewModel.getUpcomingMoviesLiveData().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(List<Movie> movies) {
 
+                upcomingAdapter.updateData((ArrayList<Movie>) movies);
+            }
+        });
+
+    }
+    public void getNowPlayingMovies(){
         nowPlayingAdapter=new MovieListAdapter(new ArrayList<>());
         nowPlayingRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
         nowPlayingRecyclerView.setAdapter(nowPlayingAdapter);
@@ -89,32 +145,6 @@ public class MainActivity extends AppCompatActivity {
         });
         imageSliderAdapter = new ImageSliderAdapter(new ArrayList<>());
         imageSlider.setAdapter(imageSliderAdapter);
-
-        topRatedAdapter=new MovieListAdapter(new ArrayList<>());
-        topRatedRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
-        topRatedRecyclerView.setAdapter(topRatedAdapter);
-
-        topRatedAdapter.setMovieClickListener(new MovieClickListener() {
-            @Override
-            public void onMovieClicked(View view, Movie movie) {
-                showMovieDetails(movie);
-            }
-        });
-        viewModel.getPopularMovieLiveData().observe(this, new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(List<Movie> movies) {
-                popularAdapter.updateData((ArrayList<Movie>) movies);
-            }
-        });
-
-        viewModel.getUpcomingMoviesLiveData().observe(this, new Observer<List<Movie>>() {
-            @Override
-            public void onChanged(List<Movie> movies) {
-
-                upcomingAdapter.updateData((ArrayList<Movie>) movies);
-            }
-        });
-
         viewModel.getNowPlayingMoviesLiveData().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
@@ -144,6 +174,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+    public void getTopRatedMovies(){
+        topRatedAdapter=new MovieListAdapter(new ArrayList<>());
+        topRatedRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false));
+        topRatedRecyclerView.setAdapter(topRatedAdapter);
+
+        topRatedAdapter.setMovieClickListener(new MovieClickListener() {
+            @Override
+            public void onMovieClicked(View view, Movie movie) {
+                showMovieDetails(movie);
+            }
+        });
         viewModel.getTopRatedMoviesLiveData().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(List<Movie> movies) {
@@ -151,9 +193,14 @@ public class MainActivity extends AppCompatActivity {
                 topRatedAdapter.updateData((ArrayList<Movie>) movies);
             }
         });
-
     }
 
+    public void loadMovieData(){
+        getPopularMovies();
+        getUpcomingMovies();
+        getTopRatedMovies();
+        getNowPlayingMovies();
+    }
     public void showMovieDetails(Movie movie){
         MoviePreview moviePreview=new MoviePreview(movie);
         moviePreview.show(getSupportFragmentManager(),"Movie Preview");

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.rahulsrenj.moviecatalogue.R;
@@ -25,6 +26,7 @@ public class MovieRepository {
     private MutableLiveData<List<Movie>> upcomingMoviesLiveData=new MutableLiveData<>();
     private MutableLiveData<List<Movie>> topRatedMoviesLiveData=new MutableLiveData<>();
     private MutableLiveData<List<Movie>> nowPlayingMoviesLiveData=new MutableLiveData<>();
+    private MutableLiveData<Boolean> errorState=new MutableLiveData<>();
 
     public MovieRepository(Application application)
     {
@@ -42,12 +44,15 @@ public class MovieRepository {
                 {
                     movieArrayList= (ArrayList<Movie>) movieResponse.getResults();
                     popularMovieLiveData.setValue(movieArrayList);
+                    errorState.setValue(false);
+                }else {
+                    errorState.setValue(true);
                 }
             }
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-
+                errorState.setValue(true);
             }
         });
 
@@ -113,14 +118,16 @@ public class MovieRepository {
 
             @Override
             public void onFailure(Call<MovieResponse> call, Throwable t) {
-                Toast.makeText(application.getApplicationContext(), "Failed : "+t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-                Log.d("tagy",t.getMessage());
+
             }
         });
         return nowPlayingMoviesLiveData;
     }
 
-
+    public LiveData<Boolean> getErrorState()
+    {
+        return errorState;
+    }
 
 
 
