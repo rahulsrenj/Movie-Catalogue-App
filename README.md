@@ -48,27 +48,6 @@ This app uses modern Android development practices and libraries:
 
 ---
 
-## Architecture & Code Highlights
-
-### MVVM Pattern:
-- `MovieViewModel` fetches movie data through `MovieRepository`.  
-- `MainActivity` observes `LiveData` and updates UI accordingly.  
-
-### Network Layer:
-- Retrofit interface `MovieServiceApi` defines endpoints.  
-- `MovieRepository` performs async network requests and posts results.  
-
-### UI Components:
-- `RecyclerView` adapters for movie lists with click listeners.  
-- `ViewPager2` for now-playing movie image slider with auto-scroll via a `Handler` and `Runnable`.  
-
-### Auto-scroll Handler Management:
-- `Handler` and `Runnable` declared as member variables.  
-- `Runnable` cycles through images every 5 seconds.  
-- Proper lifecycle management: callbacks removed in `onDestroy()` to prevent memory leaks and skipped images.  
-
----
-
 ## Getting Started
 
 ### Prerequisites
@@ -87,5 +66,5 @@ This app uses modern Android development practices and libraries:
 ### Installation
 
 ```bash
-git clone https://github.com/rahulsrenj/MovieCatalogue.git
+https://github.com/rahulsrenj/Movie-Catalogue-App.git
 cd MovieCatalogue
