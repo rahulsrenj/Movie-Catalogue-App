@@ -82,7 +82,6 @@ This app uses modern Android development practices and libraries:
 - Retrofit2  
 - Gson Converter  
 - Glide  
-- Material Components  
 - Data Binding  
 
 ### Installation
