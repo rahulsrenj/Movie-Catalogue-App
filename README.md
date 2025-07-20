@@ -40,7 +40,7 @@ This app uses modern Android development practices and libraries:
       <em>Scroll Down</em>
     </td>
     <td align="center">
-      <img src="https://github.com/user-attachments/assets/416fab0e-77af-4dfe-ac02-dddf56b7519d" alt="Movie Preview" width="300"/><br>
+      <img src="https://github.com/user-attachments/assets/b1c7e5cd-8dd1-4bd5-a860-e076984d0581"  alt="Scroll Down" width="300"/><br>
       <em>Movie Preview</em>
     </td>
   </tr>
