@@ -67,4 +67,3 @@ This app uses modern Android development practices and libraries:
 
 ```bash
 https://github.com/rahulsrenj/Movie-Catalogue-App.git
-cd MovieCatalogue
