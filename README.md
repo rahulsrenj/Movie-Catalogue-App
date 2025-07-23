@@ -66,4 +66,4 @@ This app uses modern Android development practices and libraries:
 ### Installation
 
 ```bash
-https://github.com/rahulsrenj/Movie-Catalogue-App.git
+git clone https://github.com/rahulsrenj/Movie-Catalogue-App.git
