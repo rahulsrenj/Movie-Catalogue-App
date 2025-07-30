@@ -57,7 +57,6 @@ This app uses modern Android development practices and libraries:
 
 ### Dependencies
 
-- AndroidX Libraries  
 - Retrofit2  
 - Gson Converter  
 - Glide  
